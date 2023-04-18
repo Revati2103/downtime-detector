@@ -1,4 +1,4 @@
-const Website = require('../models/websiteModel');
+const Website = require('../models/Website');
 const sendNotification = require('../config/sendNotification');
 
 exports.createWebsite = async (req, res, next) => {

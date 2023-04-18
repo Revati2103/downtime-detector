@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500
-//const websiteRoutes = require('./routes/websiteRoutes');
+const websiteRoutes = require('./routes/websiteRoutes');
 const dotenv = require("dotenv");
 require("dotenv").config();
 
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cors())
 
 // Set up routes
-//app.use('/api/websites', websiteRoutes);
+app.use('/api/websites', websiteRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
