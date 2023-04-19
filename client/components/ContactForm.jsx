@@ -17,8 +17,23 @@ const ContactForm = () => {
     contactPhone: Yup.string().required('Required'),
   });
 
-  const onSubmit = (values, { resetForm }) => {
-    console.log(values);
+  const onSubmit = async (values, { resetForm }) => {
+    try {
+      const response = await fetch('/api/websites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      if (response.ok) {
+        setIsWebsiteUp(true);
+        const result = await response.json();
+        console.log(result);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     resetForm();
   };
 
