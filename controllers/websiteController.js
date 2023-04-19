@@ -49,7 +49,12 @@ const checkWebsites = async () => {
           to: website.contactPhone,
         });
         console.log(message.sid);
-        website.alertSent = true; // set the alertSent field to true
+
+        // update the alertSent field to true
+        await Website.updateOne(
+          { _id: website._id, alertSent: { $ne: true } },
+          { $set: { alertSent: true } }
+        );
       }
       website.lastChecked = Date.now();
       await website.save();
