@@ -35,6 +35,7 @@ const ContactForm = () => {
       console.error(error);
     }
     resetForm();
+    setIsWebsiteUp(false);
   };
 
   return (

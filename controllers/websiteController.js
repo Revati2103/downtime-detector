@@ -42,13 +42,14 @@ const checkWebsites = async () => {
   websites.forEach(async (website) => {
     try {
       const response = await fetch(website.websiteUrl);
-      if (!response.ok) {
+      if (!response.ok && !website.alertSent) {
         const message = await client.messages.create({
           body: `Your website ${website.websiteUrl} is down.`,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: website.contactPhone,
         });
         console.log(message.sid);
+        website.alertSent = true; // set the alertSent field to true
       }
       website.lastChecked = Date.now();
       await website.save();
@@ -57,6 +58,7 @@ const checkWebsites = async () => {
     }
   });
 };
+
 
 module.exports = {
   createWebsite,
