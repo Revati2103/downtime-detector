@@ -1,7 +1,7 @@
 const Website = require('../models/Website');
 const sendNotification = require('../config/sendNotification');
 
-exports.createWebsite = async (req, res, next) => {
+const createWebsite = async (req, res, next) => {
   try {
     const { url, contact } = req.body;
 
@@ -21,23 +21,7 @@ exports.createWebsite = async (req, res, next) => {
   }
 };
 
-exports.deleteWebsite = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    // Delete website
-    const website = await Website.findByIdAndDelete(id);
-    if (!website) {
-      return res.status(404).send('Website not found');
-    }
-
-    res.sendStatus(204);
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.checkWebsites = async (req, res, next) => {
+const checkWebsites = async (req, res, next) => {
   try {
     const websites = await Website.find();
 
@@ -65,3 +49,8 @@ exports.checkWebsites = async (req, res, next) => {
     next(err);
   }
 };
+
+module.exports = {
+  createWebsite,
+  checkWebsites
+}
