@@ -31,13 +31,17 @@ const ContactForm = () => {
         const result = await response.json();
         console.log(result);
         setIsWebsiteUp(true);
+        
       }
       setIsWebsiteUp(false); 
     } catch (error) {
       console.error(error);
     }
     resetForm();
+    alert("Thank you for your submission, you will be notified via a text-alert whenever your website goes down");
   };
+  
+  
   return (
     <>
     <h1 className='text-center text-gray-700 text-xl cursor-pointer m-10'>Website Downtime Detector</h1>
@@ -68,11 +72,7 @@ const ContactForm = () => {
         </Form>
       )}
     </Formik>
-    {isWebsiteUp && (
-  <div className="text-green-500 mt-4 text-center text-bold text-xl">
-    Website is up and running!
-  </div>
-)}
+  
     </>
   );
 };
