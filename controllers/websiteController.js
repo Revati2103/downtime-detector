@@ -11,9 +11,9 @@ const client = twilio(accountSid, authToken);
 const createWebsite = async (req, res) => {
   const { websiteUrl, contactEmail, contactPhone } = req.body;
   const website = new Website({
-    websiteUrl,
-    contactEmail,
-    contactPhone,
+    url: websiteUrl,
+    email: contactEmail,
+    phone: contactPhone,
     lastChecked: Date.now()
   });
 
