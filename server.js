@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Server Error');
 });
 
-// Run cron job every 5 minutes
+// Run cron job once everyday.
 cron.schedule('0 0 * * *', () => {
   checkWebsites();
 });
