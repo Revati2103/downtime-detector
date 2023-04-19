@@ -3,7 +3,7 @@ import {useState} from 'react'
 import * as Yup from 'yup';
 
 const ContactForm = () => {
-  const [isWebsiteUp, setIsWebsiteUp] = useState(true);
+  const [isWebsiteUp, setIsWebsiteUp] = useState(false);
 
   const initialValues = {
     websiteUrl: '',
