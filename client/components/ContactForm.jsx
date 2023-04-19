@@ -19,7 +19,7 @@ const ContactForm = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      const response = await fetch('/api/websites', {
+      const response = await fetch('/api/websites/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

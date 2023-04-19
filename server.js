@@ -2,22 +2,21 @@ const express = require('express');
 const cron = require('node-cron');
 const cors = require('cors');
 const path = require('path');
-const port = process.env.PORT || 5500
-const { checkWebsites } = require('./controllers/websiteController');
-const websiteRoutes = require('./routes/websiteRoutes');
-const dotenv = require("dotenv");
-require("dotenv").config();
+const port = process.env.PORT || 5500;
+const { createWebsite, checkWebsites } = require('./controllers/websiteController');
+const dotenv = require('dotenv');
+require('dotenv').config();
 
-const connectDB = require('./config/db')
-connectDB()
+const connectDB = require('./config/db');
+connectDB();
 
 const app = express();
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cors())
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 // Set up routes
-app.use('/api/websites', websiteRoutes);
+app.post('/api/websites', createWebsite);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
