@@ -1,7 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {useState} from 'react'
 import * as Yup from 'yup';
 
 const ContactForm = () => {
+  const [isWebsiteUp, setIsWebsiteUp] = useState(true);
+
   const initialValues = {
     websiteUrl: '',
     contactEmail: '',
@@ -49,6 +52,11 @@ const ContactForm = () => {
         </Form>
       )}
     </Formik>
+    {isWebsiteUp && (
+  <div className="text-green-500 mt-4 text-center text-bold text-xl">
+    Website is up and running!
+  </div>
+)}
     </>
   );
 };

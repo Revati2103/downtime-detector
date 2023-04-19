@@ -1,26 +1,23 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const websiteSchema = new mongoose.Schema({
+const websiteSchema = new Schema({
   url: {
     type: String,
-    required: true,
-    unique: true,
+    required: true
   },
-  contact: {
+  email: {
     type: String,
-    required: true,
+    required: true
   },
-  status: {
+  phone: {
     type: String,
-    enum: ['up', 'down'],
-    default: 'up',
+    required: true
   },
   lastChecked: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
-const Website = mongoose.model('Website', websiteSchema);
-
-module.exports = Website;
+module.exports = mongoose.model('Website', websiteSchema);
