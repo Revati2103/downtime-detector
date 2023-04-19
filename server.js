@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
 });
 
 // Run cron job every 5 minutes
-cron.schedule('*/5 * * * *', () => {
+cron.schedule('0 0 * * *', () => {
   checkWebsites();
 });
 

@@ -27,17 +27,17 @@ const ContactForm = () => {
         body: JSON.stringify(values),
       });
       if (response.ok) {
-        setIsWebsiteUp(true);
+  
         const result = await response.json();
         console.log(result);
+        setIsWebsiteUp(true);
       }
+      setIsWebsiteUp(false); 
     } catch (error) {
       console.error(error);
     }
     resetForm();
-    setIsWebsiteUp(false);
   };
-
   return (
     <>
     <h1 className='text-center text-gray-700 text-xl cursor-pointer m-10'>Website Downtime Detector</h1>

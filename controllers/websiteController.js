@@ -26,7 +26,7 @@ const createWebsite = async (req, res) => {
       const message = await client.messages.create({
         body: `The website ${websiteUrl} is down.`,
         from: process.env.TWILIO_PHONE_NUMBER,
-        to: contactPhone
+        to: website.phone
       });
       console.log(message.sid);
       return res.status(200).json({ message: 'Website is down. Notification sent to contact phone.' });
@@ -41,12 +41,16 @@ const checkWebsites = async () => {
   const websites = await Website.find();
   websites.forEach(async (website) => {
     try {
+      if (!website || !website.websiteUrl || !website.regex) {
+        console.log(`Error: Website object is not defined or missing properties`);
+        return;
+      }
       const response = await fetch(website.websiteUrl);
       if (!response.ok && !website.alertSent) {
         const message = await client.messages.create({
           body: `Your website ${website.websiteUrl} is down.`,
           from: process.env.TWILIO_PHONE_NUMBER,
-          to: website.contactPhone,
+          to: website.phone,
         });
         console.log(message.sid);
 
@@ -56,6 +60,17 @@ const checkWebsites = async () => {
           { $set: { alertSent: true } }
         );
       }
+      if (!website.regex.match(/^\/.+\/[a-z]*$/)) {
+        console.log(`Error: Invalid regular expression "${website.regex}"`);
+        return;
+      }
+      const regex = new RegExp(website.regex);
+      const body = await response.text();
+      if (regex.test(body)) {
+        console.log(`Website ${website.websiteUrl} matched regex ${website.regex}`);
+      } else {
+        console.log(`Website ${website.websiteUrl} did not match regex ${website.regex}`);
+      }
       website.lastChecked = Date.now();
       await website.save();
     } catch (error) {
@@ -63,6 +78,7 @@ const checkWebsites = async () => {
     }
   });
 };
+
 
 
 module.exports = {
