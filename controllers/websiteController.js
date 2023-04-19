@@ -1,56 +1,71 @@
 const Website = require('../models/Website');
-const sendNotification = require('../config/sendNotification');
+const fetch = require('node-fetch');
+const twilio = require('twilio');
+const dotenv = require("dotenv");
+require("dotenv").config();
 
-const createWebsite = async (req, res, next) => {
+
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = twilio(accountSid, authToken);
+
+const createWebsite = async (req, res) => {
+  const { websiteUrl, contactEmail, contactPhone } = req.body;
+  const website = new Website({
+    websiteUrl,
+    contactEmail,
+    contactPhone
+  });
+
   try {
-    const { url, contact } = req.body;
-
-    // Check if website already exists
-    const existingWebsite = await Website.findOne({ url });
-    if (existingWebsite) {
-      return res.status(400).send('Website already exists');
-    }
-
-    // Create new website
-    const website = new Website({ url, contact });
     await website.save();
-
-    res.status(201).json(website);
-  } catch (err) {
-    next(err);
-  }
-};
-
-const checkWebsites = async (req, res, next) => {
-  try {
-    const websites = await Website.find();
-
-    for (const website of websites) {
-      try {
-        const response = await fetch(website.url);
-        const isUp = response.ok;
-
-        // Update website status and last checked time
-        website.status = isUp ? 'up' : 'down';
-        website.lastChecked = new Date();
-        await website.save();
-
-        // Send notification if website is down
-        if (!isUp) {
-          await sendNotification(website.contact, website.url);
-        }
-      } catch (err) {
-        console.error(err);
-      }
+    const response = await fetch(websiteUrl);
+    if (response.ok) {
+      return res.status(200).json({ message: 'Website is up and running!' });
+    } else {
+      client.messages.create({
+        body: `The website ${websiteUrl} is down.`,
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: contactPhone
+      })
+      .then(() => {
+        return res.status(200).json({ message: 'Website is down. Notification sent to contact phone.' });
+      })
+      .catch((error) => {
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to send notification.' });
+      });
     }
-
-    res.sendStatus(200);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to save website.' });
   }
 };
+
+const checkWebsites = async () => {
+  const websites = await Website.find();
+  websites.forEach(async (website) => {
+    try {
+      const response = await fetch(website.url);
+      if (!response.ok) {
+        const message = await client.messages.create({
+          body: `Your website ${website.url} is down.`,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: website.phone,
+        });
+        console.log(message.sid);
+      }
+      website.lastChecked = Date.now();
+      await website.save();
+    } catch (error) {
+      console.log(`Error checking website ${website.url}: ${error.message}`);
+    }
+  });
+};
+
 
 module.exports = {
   createWebsite,
   checkWebsites
+
 }

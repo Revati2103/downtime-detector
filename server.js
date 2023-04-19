@@ -1,7 +1,9 @@
 const express = require('express');
+const cron = require('node-cron');
 const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500
+const { checkWebsites } = require('./controllers/websiteController');
 const websiteRoutes = require('./routes/websiteRoutes');
 const dotenv = require("dotenv");
 require("dotenv").config();
@@ -23,6 +25,10 @@ app.use((err, req, res, next) => {
   res.status(500).send('Server Error');
 });
 
+// Run cron job every 5 minutes
+cron.schedule('*/5 * * * *', () => {
+  checkWebsites();
+});
 
 app.get('/', (req,res) => {
     res.send('Hello from 5500!');
