@@ -46,19 +46,14 @@ const checkWebsites = async () => {
         return;
       }
       const response = await fetch(website.websiteUrl);
-      if (!response.ok && !website.alertSent) {
+      if (!response.ok && !website.snooze) {
+        const snoozeUrl = `http://localhost:${process.env.PORT}/api/snooze/${website._id}`;
         const message = await client.messages.create({
-          body: `Your website ${website.websiteUrl} is down.`,
+          body: `Your website ${website.websiteUrl} is down. Click here to snooze notifications: ${snoozeUrl}`,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: website.phone,
         });
         console.log(message.sid);
-
-        // update the alertSent field to true
-        await Website.updateOne(
-          { _id: website._id, alertSent: { $ne: true } },
-          { $set: { alertSent: true } }
-        );
       }
       if (!website.regex.match(/^\/.+\/[a-z]*$/)) {
         console.log(`Error: Invalid regular expression "${website.regex}"`);

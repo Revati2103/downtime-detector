@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500;
 const { createWebsite, checkWebsites } = require('./controllers/websiteController');
+const { snoozeUrl } = require('./controllers/snoozeController')
 const dotenv = require('dotenv');
 require('dotenv').config();
 
@@ -17,6 +18,8 @@ app.use(cors());
 
 // Set up routes
 app.post('/api/websites', createWebsite);
+
+app.put('/api/snooze/:id', snoozeUrl);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

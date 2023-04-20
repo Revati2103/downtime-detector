@@ -15,7 +15,7 @@ const websiteSchema = new Schema({
     type: String,
     required: true
   },
-  alertSent: {
+  snooze: {
     type: Boolean,
     default: false,
   },
