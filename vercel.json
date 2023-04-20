@@ -1,18 +1,27 @@
-{ 
+{
     "version": 2,
     "builds": [
-      { 
-        "src": "*.js", 
-        "use": "@vercel/node" 
-    }
+      {
+        "src": "server/index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "client/next.config.js",
+        "use": "@vercel/next"
+      }
     ],
-    
-        "routes": [
-        
-          { 
-            "src": "/(.*)", 
-            "dest": "/" 
-           }
-        ]
-}
+    "routes": [
+      {
+        "src": "/api/.*",
+        "dest": "server/index.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/client/_next/$1"
+      }
+    ],
+    "env": {
+      "MONGODB_URI": "@MONGO_URI"
+    }
+  }
   
