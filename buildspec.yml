@@ -14,7 +14,7 @@ phases:
 
   post_build:
     commands:
-      - npm run start
+      - cd ../ && npm run start
     
 artifacts:
   files:
