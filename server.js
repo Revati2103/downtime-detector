@@ -32,6 +32,10 @@ cron.schedule('0 0 * * *', () => {
   checkWebsites();
 });
 
+// cron.schedule('* * * * *', () => {
+//   checkWebsites();
+// })
+
 app.get('/', (req,res) => {
     res.send('Hello from 5500!');
 })
