@@ -15,15 +15,7 @@
         "src": "/(.*)",
         "dest": "/client/$1"
       }
-    ],
-    "env": {
-      "MONGODB_URI": "@MONGO_URI"
-    },
-    "secrets": {
-        "MONGO_URI": {
-          "description": "MongoDB URI",
-          "required": true
-        }
-      }
+    ]
+   
   }
   
