@@ -10,7 +10,7 @@ phases:
   build:
     commands:
       # Build client-side code
-      - npm run client-build
+      - cd client && npm run build
     
 artifacts:
   files:

@@ -7,8 +7,8 @@
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "next start --prefix client",
-    "client-build": "next build --prefix client"
+    "client": "next start --prefix client"
+    
   },
   "author": "Revati B",
   "license": "ISC",
