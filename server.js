@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // Serve static files from the build directory
-app.use(express.static(path.join(__dirname, 'client/.next')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Set up routes
 app.post('/api/websites', createWebsite);

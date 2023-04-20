@@ -11,11 +11,12 @@ phases:
     commands:
       # Build client-side code
       - cd client && npm run build
-
-  post_build:
-    commands:
-      - cd ../ && npm run start
     
+  cache:
+    paths:
+      - 'node_modules/**/*' # Cache `node_modules` for faster `yarn` or `npm i`
+      - '.next/cache/**/*' # Cache Next.js for faster application rebuilds
+
 artifacts:
   files:
     - '**/*'
