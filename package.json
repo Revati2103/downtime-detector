@@ -7,7 +7,7 @@
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "next start -p 5500 --prefix client",
+    "client": "next start --prefix client",
     "client-build": "npm run build --prefix client"
     
   },
