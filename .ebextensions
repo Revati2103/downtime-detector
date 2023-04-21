@@ -1,3 +1,9 @@
 option_settings:
   - option_name: NODE_COMMAND
     value: npm start
+  - option_name: NODE_ENV
+    value: production
+  aws:elasticbeanstalk:environment:proxy:staticfiles:
+    "/static/":
+      "Access-Control-Allow-Origin": "*"
+
