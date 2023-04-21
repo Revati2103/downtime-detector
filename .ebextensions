@@ -1,8 +1,4 @@
 option_settings:
-  - option_name: NODE_COMMAND
-    value: node server.js -p 5500
-  - option_name: NODE_ENV
-    value: production
   aws:elasticbeanstalk:environment:proxy:staticfiles:
     "/static/":
       "Access-Control-Allow-Origin": "*"
