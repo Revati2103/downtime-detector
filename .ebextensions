@@ -1,5 +1,8 @@
 option_settings:
   aws:elasticbeanstalk:environment:proxy:staticfiles:
-    "/static/":
-      "Access-Control-Allow-Origin": "*"
+    /api/*:
+      "Access-Control-Allow-Origin": "'*'"
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
+      "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+
 
