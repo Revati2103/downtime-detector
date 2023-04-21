@@ -19,7 +19,9 @@ const ContactForm = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      const response = await fetch('http://localhost:5500/api/websites', {
+      const apiUrl = process.env.API_URL || "http://localhost:5500/api/websites";
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
