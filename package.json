@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node server.j -p 5500",
+    "start": "node server.js -p 5500",
     "server": "nodemon server.js",
     "client": "next start --prefix client",
     "client-build": "npm run build --prefix client"
