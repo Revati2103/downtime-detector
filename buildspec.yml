@@ -11,11 +11,11 @@ phases:
     commands:
       # Build client-side code
       - npm run client-build
-      - aws s3 sync out s3://downtime-detector-bucket --delete
+      - aws s3 sync client/out s3://downtime-detector-bucket --delete
     
 artifacts:
   files:
     - '**/*'
   discard-paths: no  
-  base-directory: './client/out'
+  base-directory: 'client/out'
   
