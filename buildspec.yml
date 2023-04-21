@@ -11,10 +11,11 @@ phases:
     commands:
       # Build client-side code
       - npm run client-build
+      # Start Node.js server
+      - npm run start
     
 artifacts:
   files:
     - '**/*'
   discard-paths: no  
   base-directory: ./
-  
