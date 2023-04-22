@@ -1,10 +1,6 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 function SnoozeInfo() {
-  const router = useRouter();
-  const { url } = router.query;
-
   return (
     <div className="max-w-xl mx-auto px-4">
       <h3 className="text-2xl font-semibold mb-4">Success!</h3>

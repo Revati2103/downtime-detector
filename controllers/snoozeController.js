@@ -18,14 +18,13 @@ const snoozeUrl = async (req, res) => {
     if (!website) {
       return res.status(404).json({ message: 'Website not found or already snoozed' });
     }
-    // return res.json({ message: 'Website snoozed successfully' });
-    return res.redirect(`/snooze-info?url=${website.url}`);
+    // Redirect user to /app/snooze-info/:id
+    return res.redirect(`/snooze-info/${website._id}`);
   } catch (error) {
     console.log(`Error snoozing website: ${error.message}`);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 
 module.exports = {
   snoozeUrl
