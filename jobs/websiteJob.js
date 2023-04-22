@@ -23,8 +23,8 @@ const checkWebsites = async () => {
       const response = await fetch(website.url);
       
       if (!response.ok && !website.snooze) {
-        // const snoozeUrl = `http://localhost:${process.env.PORT}/api/snooze/${website._id}`;
-        const snoozeUrl = `https://25f4-2600-1700-4570-21e0-29d8-d633-469d-cbd8.ngrok-free.app/api/snooze/${website._id}`;
+         const snoozeUrl = `http://localhost:${process.env.PORT}/api/snooze/${website._id}`;
+        // const snoozeUrl = `https://25f4-2600-1700-4570-21e0-29d8-d633-469d-cbd8.ngrok-free.app/api/snooze/${website._id}`;
         console.log(snoozeUrl);
         const message = await client.messages.create({
           body: `Your website ${website.url} is down. Click here to snooze notifications: <a href="${snoozeUrl}">Snooze</a>`,
