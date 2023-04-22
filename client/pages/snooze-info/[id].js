@@ -1,10 +1,12 @@
 import Link from 'next/link';
 
-export async function getStaticProps() {
+export async function getStaticPaths() {
   return {
-    props: {},
-  }
+    paths: [],
+    fallback: true,
+  };
 }
+
 
 function SnoozeInfo() {
   return (
