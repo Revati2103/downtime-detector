@@ -3,7 +3,8 @@ const cron = require('node-cron');
 const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500;
-const { createWebsite, checkWebsites } = require('./controllers/websiteController');
+const { createWebsite } = require('./controllers/websiteController');
+const { checkWebsites } = require('./jobs/websiteJob');
 const { snoozeUrl } = require('./controllers/snoozeController')
 const dotenv = require('dotenv');
 require('dotenv').config();
