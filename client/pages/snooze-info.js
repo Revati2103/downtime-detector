@@ -11,7 +11,7 @@ function SnoozeInfo() {
       <p className="mb-4">
         Alerts for {url} have been permanently snoozed. If you want to monitor your website again, please use the URL submission form.
       </p>
-      <Link href="/">
+      <Link legacyBehavior href="/">
         <a className="text-blue-500 hover:text-blue-700">URL Submission Form</a>
       </Link>
     </div>
