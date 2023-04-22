@@ -3,8 +3,14 @@ import Link from 'next/link';
 export async function getStaticPaths() {
   return {
     paths: [],
-    fallback: true,
+    fallback: true
   };
+}
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  }
 }
 
 
