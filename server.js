@@ -45,13 +45,17 @@ app.use((err, req, res, next) => {
 });
 
 // Run cron job once everyday.
-cron.schedule('0 0 * * *', () => {
-  checkWebsites();
-});
-
-// cron.schedule('* * * * *', () => {
+// cron.schedule('0 0 * * *', () => {
 //   checkWebsites();
-// })
+// });
+
+// cron.schedule('*/2 * * * *', () => {
+//   checkWebsites();
+// });
+
+cron.schedule('* * * * *', () => {
+  checkWebsites();
+})
 
 app.get('/', (req,res) => {
     res.send('Hello from 5500!');
