@@ -1,5 +1,11 @@
 import Link from 'next/link';
 
+export async function getStaticProps() {
+  return {
+    props: {},
+  }
+}
+
 function SnoozeInfo() {
   return (
     <div className="max-w-xl mx-auto px-4">

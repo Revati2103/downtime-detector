@@ -23,7 +23,7 @@ const checkWebsites = async () => {
       if (!response.ok && !website.snooze) {
 
         const urlPrefix = process.env.URL_PREFIX || 'http://localhost:5500'
-        const snoozeUrl = `${urlPrefix}/app/snooze-info/${website._id}`;
+        const snoozeUrl = `${urlPrefix}/snooze-info/${website._id}`;
         console.log(snoozeUrl);
         const message = await client.messages.create({
           body: `Your website ${website.url} is down. Click here to snooze notifications: <a href="${snoozeUrl}">Snooze</a>`,
