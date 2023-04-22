@@ -36,7 +36,9 @@ app.use(express.static(path.join(__dirname, 'client/out')));
 // Set up routes
 app.post('/api/websites', createWebsite);
 
-app.put('/api/snooze/:id', snoozeUrl);
+//app.put('/api/snooze/:id', snoozeUrl);
+app.put('/snooze-info/:id', snoozeUrl);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

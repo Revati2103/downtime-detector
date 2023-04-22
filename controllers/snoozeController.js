@@ -5,7 +5,7 @@ const snoozeUrl = async (req, res) => {
     const website = await Website.findOneAndUpdate(
       {
         _id: req.params.id,
-        snooze: { $ne: true } // Only update if not already snoozed
+        snooze: false // Only update if not already snoozed
       },
       {
         $set: {
