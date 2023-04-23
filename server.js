@@ -34,10 +34,17 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'client/out')));
 
 // Set up routes
-app.post('/api/websites', createWebsite);
+//app.post('/api/websites', createWebsite);
 
 app.put('/api/snooze/:id', snoozeUrl);
 
+// Import routes
+const twilioRoutes = require('./routes/twilioRoutes');
+const websiteRoutes = require('./routes/websiteRoutes');
+
+// Use routes
+app.use('/api/twilio', twilioRoutes);
+app.use('/api/websites', websiteRoutes);
 
 
 // Error handling middleware

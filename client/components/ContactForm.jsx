@@ -1,18 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import {useState} from 'react'
 import * as Yup from 'yup';
 
 const ContactForm = () => {
-  const [isWebsiteUp, setIsWebsiteUp] = useState(false);
+ 
 
   const initialValues = {
     websiteUrl: '',
     contactPhone: '',
+    code: '',
   };
-
+  
   const validationSchema = Yup.object({
     websiteUrl: Yup.string().required('Required'),
     contactPhone: Yup.string().required('Required'),
+    code: Yup.string().required('Required'),
   });
 
   const onSubmit = async (values, { resetForm }) => {
@@ -30,10 +31,10 @@ const ContactForm = () => {
   
         const result = await response.json();
         console.log(result);
-        setIsWebsiteUp(true);
+      
         
       }
-      setIsWebsiteUp(false); 
+    
     } catch (error) {
       console.error(error);
     }
@@ -58,6 +59,12 @@ const ContactForm = () => {
             <label htmlFor="contactPhone" className="block text-gray-700 font-bold mb-2">Contact Phone</label>
             <Field type="tel" id="contactPhone" name="contactPhone" placeholder="+1 123-456-7890" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
             <ErrorMessage name="contactPhone" component="div" className="error-message text-red-500" />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="code" className="block text-gray-700 font-bold mb-2">Enter Verification Code</label>
+            <Field type="text" id="code" name="code" placeholder="Verification code" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            <ErrorMessage name="code" component="div" className="error-message text-red-500" />
           </div>
 
           <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
