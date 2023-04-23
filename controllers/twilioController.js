@@ -38,7 +38,7 @@ const verifyCode = async (req, res) => {
     .verificationChecks
     .create({
       to: contactPhone,
-      code: req.body.code
+      code: code
     });
 
     if (verificationCheck.status === 'approved') {
