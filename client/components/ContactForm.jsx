@@ -5,43 +5,40 @@ import { useState } from 'react';
 const ContactForm = () => {
  
   const [showModal, setShowModal] = useState(false);
-
+  const [websiteUrl, setWebsiteUrl] = useState('');
+  
   const initialValues = {
     websiteUrl: '',
     contactPhone: '',
+    verificationCode: ''
   };
   
   const validationSchema = Yup.object({
     websiteUrl: Yup.string().required('Required'),
     contactPhone: Yup.string().required('Required'),
+    verificationCode: Yup.string().required('Please enter the code you received via text')
   });
 
   const onSubmit = async (values, { resetForm }) => {
-    // try {
-    //   const apiUrl = process.env.API_URL || "http://localhost:5500/api/websites";
+    try {
+      const apiUrl = process.env.API_URL || "http://localhost:5500/api/twilio/generate";
 
-    //   const response = await fetch(apiUrl, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(values),
-    //   });
-    //   if (response.ok) {
-  
-    //     const result = await response.json();
-    //     console.log(result);
-    //     setShowModal(true)
-      
-        
-    //   }
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone: values.contactPhone }),
+      });
+      if (response.ok) {
+        setWebsiteUrl(values.websiteUrl); // Save website URL for verification
+        resetForm();
+        setShowModal(true);
+      }
     
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    resetForm();
-    //alert("Thank you for your submission, you will be notified via a text-alert whenever your website goes down");
-    setShowModal(true)
+    } catch (error) {
+      console.error(error);
+    }
   };
   
   const handleVerify = (values) => {
