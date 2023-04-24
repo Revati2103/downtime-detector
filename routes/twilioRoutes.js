@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const twilioController = require('../controllers/twilioController');
+const {sendVerificationCode, verifyCode} = require('../controllers/twilioController');
 
 // Endpoint for sending verification code
-//router.post('/sendVerificationCode', twilioController.sendVerificationCode);
+router.post('/verify', sendVerificationCode);
+router.get('/verify', verifyCode);
 
 module.exports = router;

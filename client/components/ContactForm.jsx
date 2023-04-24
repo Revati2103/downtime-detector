@@ -1,81 +1,111 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useState } from 'react';
 
 const ContactForm = () => {
  
+  const [showModal, setShowModal] = useState(false);
 
   const initialValues = {
     websiteUrl: '',
     contactPhone: '',
-    code: '',
   };
   
   const validationSchema = Yup.object({
     websiteUrl: Yup.string().required('Required'),
     contactPhone: Yup.string().required('Required'),
-    code: Yup.string().required('Required'),
   });
 
   const onSubmit = async (values, { resetForm }) => {
-    try {
-      const apiUrl = process.env.API_URL || "http://localhost:5500/api/websites";
+    // try {
+    //   const apiUrl = process.env.API_URL || "http://localhost:5500/api/websites";
 
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-      if (response.ok) {
+    //   const response = await fetch(apiUrl, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(values),
+    //   });
+    //   if (response.ok) {
   
-        const result = await response.json();
-        console.log(result);
+    //     const result = await response.json();
+    //     console.log(result);
+    //     setShowModal(true)
       
         
-      }
+    //   }
     
-    } catch (error) {
-      console.error(error);
-    }
+    // } catch (error) {
+    //   console.error(error);
+    // }
     resetForm();
-    alert("Thank you for your submission, you will be notified via a text-alert whenever your website goes down");
+    //alert("Thank you for your submission, you will be notified via a text-alert whenever your website goes down");
+    setShowModal(true)
   };
   
+  const handleVerify = (values) => {
+    // handle verification code verification here
+    console.log(values);
+    setShowModal(false);
+  }
   
   return (
     <>
-    <h1 className='text-center text-gray-700 text-xl cursor-pointer m-10'>Website Downtime Detector</h1>
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-      {(formik) => (
-        <Form className="max-w-md mx-auto">
-          <div className="mb-4">
-            <label htmlFor="websiteUrl" className="block text-gray-700 font-bold mb-2">Website URL</label>
-            <Field type="text" id="websiteUrl" name="websiteUrl" placeholder="https://example.com" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-            <ErrorMessage name="websiteUrl" component="div" className="error-message text-red-500" />
-          </div>
+      <h1 className='text-center text-gray-700 text-xl cursor-pointer m-10'>Website Downtime Detector</h1>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+  {(formik) => (
+    <div className="max-w-md mx-auto">
+      <form onSubmit={formik.handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="websiteUrl" className="block text-gray-700 font-bold mb-2">Website URL</label>
+          <Field type="text" id="websiteUrl" name="websiteUrl" placeholder="https://example.com" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          <ErrorMessage name="websiteUrl" component="div" className="error-message text-red-500" />
+        </div>
 
-          <div className="mb-4">
-            <label htmlFor="contactPhone" className="block text-gray-700 font-bold mb-2">Contact Phone</label>
-            <Field type="tel" id="contactPhone" name="contactPhone" placeholder="+1 123-456-7890" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-            <ErrorMessage name="contactPhone" component="div" className="error-message text-red-500" />
-          </div>
+        <div className="mb-4">
+          <label htmlFor="contactPhone" className="block text-gray-700 font-bold mb-2">Contact Phone</label>
+          <Field type="tel" id="contactPhone" name="contactPhone" placeholder="+1 123-456-7890" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          <ErrorMessage name="contactPhone" component="div" className="error-message text-red-500" />
+        </div>
 
-          <div className="mb-4">
-            <label htmlFor="code" className="block text-gray-700 font-bold mb-2">Enter Verification Code</label>
-            <Field type="text" id="code" name="code" placeholder="Verification code" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
-            <ErrorMessage name="code" component="div" className="error-message text-red-500" />
-          </div>
+        <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
+          Submit
+        </button>
+      </form>
 
-          <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
-            Submit
-          </button>
-        </Form>
+      {/* Add a modal to enter verification code */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg p-4">
+            <h2 className="text-lg font-bold mb-4">Enter Verification Code</h2>
+            <Formik initialValues={{ verificationCode: '' }} onSubmit={handleVerify}>
+              {(formik) => (
+                <form onSubmit={formik.handleSubmit}>
+                  <div className="mb-4">
+                    <label htmlFor="verificationCode" className="block text-gray-700 font-bold mb-2">Verification Code</label>
+                    <Field type="text" id="verificationCode" name="verificationCode" placeholder="Enter verification code" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    <ErrorMessage name="verificationCode" component="div" className="error-message text-red-500" />
+                  </div>
+                  <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
+                    Verify
+                  </button>
+                </form>
+              )}
+            </Formik>
+          </div>
+        </div>
       )}
-    </Formik>
-  
+    </div>
+  )}
+</Formik>
+
     </>
   );
-};
+  
+    
+
+
+}
 
 export default ContactForm;
