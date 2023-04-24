@@ -6,7 +6,7 @@ const ContactForm = () => {
  
   const [showModal, setShowModal] = useState(false);
   const [websiteUrl, setWebsiteUrl] = useState('');
-  
+
   const initialValues = {
     websiteUrl: '',
     contactPhone: '',
@@ -41,10 +41,35 @@ const ContactForm = () => {
     }
   };
   
-  const handleVerify = (values) => {
+  const handleVerify = async (values , { resetForm }) => {
     // handle verification code verification here
-    console.log(values);
-    setShowModal(false);
+
+    try {
+      const apiUrl = process.env.API_URL || "http://localhost:5500/api/twilio/verify";
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          phone: values.contactPhone,
+          url: websiteUrl,
+          code: values.verificationCode
+        })
+      });
+  
+      if (response.status === 200) {
+        alert('Your website has been added for monitoring. You will receive text alerts whenever your website is down.');
+        // Reset form after successful verification
+        resetForm();
+        setWebsiteUrl('');
+        setShowModal(false);
+      } else {
+        alert('Verification failed. Please check the code and try again.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   
   return (
