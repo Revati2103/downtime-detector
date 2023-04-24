@@ -3,7 +3,6 @@ const cron = require('node-cron');
 const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500;
-const { createWebsite } = require('./controllers/websiteController');
 const { checkWebsites } = require('./jobs/websiteJob');
 const { snoozeUrl } = require('./controllers/snoozeController')
 const dotenv = require('dotenv');
@@ -33,18 +32,16 @@ app.use((req, res, next) => {
 // Serve static files from the build directory
 app.use(express.static(path.join(__dirname, 'client/out')));
 
-// Set up routes
-//app.post('/api/websites', createWebsite);
 
 app.put('/api/snooze/:id', snoozeUrl);
 
 // Import routes
 const twilioRoutes = require('./routes/twilioRoutes');
-const websiteRoutes = require('./routes/websiteRoutes');
+
 
 // Use routes
 app.use('/api/twilio', twilioRoutes);
-app.use('/api/websites', websiteRoutes);
+
 
 
 // Error handling middleware

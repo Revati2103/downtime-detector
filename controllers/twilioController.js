@@ -1,3 +1,5 @@
+const Website = require('../models/Website');
+const fetch = require('node-fetch');
 const twilio = require('twilio');
 const dotenv = require('dotenv');
 require('dotenv').config();
@@ -29,28 +31,50 @@ const sendVerificationCode = async (req, res) => {
 };
 
 const verifyCode = async (req, res) => {
-  const { contactPhone, code } = req.body;
+  const { websiteUrl, contactPhone, code } = req.body;
 
   try {
-  // Prompt the user to enter the verification code
-    const verificationCheck = await 
-    client.verify.v2.services(process.env.TWILIO_VERIFY_SERVICE_SID)
-    .verificationChecks
-    .create({
-      to: contactPhone,
-      code: code
-    });
+    // Prompt the user to enter the verification code
+    const verificationCheck = await client.verify.v2.services(process.env.TWILIO_VERIFY_SERVICE_SID)
+      .verificationChecks
+      .create({
+        to: contactPhone,
+        code: code
+      });
 
     if (verificationCheck.status === 'approved') {
-      return res.status(200).json({ status: 'success', message: 'Verification successful.' });
+
+      // Verification successful, save the website to MongoDB
+      const website = new Website({
+        url: websiteUrl,
+        phone: contactPhone,
+        lastChecked: Date.now(),
+      });
+      await website.save();
+
+      // Check if website is up and running
+      const response = await fetch(websiteUrl);
+      if (response.ok) {
+        return res.status(200).json({ message: 'Website is up and running!' });
+      } else {
+        // Send notification to contact phone
+        const message = await client.messages.create({
+          body: `The website ${websiteUrl} is down.`,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: website.phone
+        });
+        console.log(message.sid);
+        return res.status(200).json({ message: 'Website is down. Notification sent to contact phone.' });
+      }
     } else {
       return res.status(401).json({ status: 'error', message: 'Verification failed.' });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ status: 'error', message: 'Failed to verify code.' });
+    return res.status(500).json({ message: 'Failed to verify code.' });
   }
 };
+
 
 module.exports = {
   sendVerificationCode,
