@@ -24,10 +24,10 @@ const ContactForm = () => {
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      //const ApiUrlPrefix = process.env.API_URL_PREFIX || "http://localhost:5500";
+      const ApiUrlPrefix = process.env.NEXT_PUBLIC_URL_PREFIX || "http://localhost:5500";
       console.log('inside onSubmit')
 
-      const response = await fetch('http://localhost:5500/api/twilio/generate', {
+      const response = await fetch(`${ApiUrlPrefix}/api/twilio/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,8 +52,8 @@ const ContactForm = () => {
   const handleVerify = async (values , { resetForm }) => {
 
     try {
-      //const ApiUrlPrefix = process.env.API_URL_PREFIX || "http://localhost:5500";
-      const response = await fetch(`http://localhost:5500/api/twilio/verify?sid=${verificationSid}`, {
+      const ApiUrlPrefix = process.env.NEXT_PUBLIC_URL_PREFIX || "http://localhost:5500";
+      const response = await fetch(`${ApiUrlPrefix}/api/twilio/verify?sid=${verificationSid}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
