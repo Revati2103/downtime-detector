@@ -8,8 +8,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "next start --prefix client",
-    "client-build": "npm run build --prefix client"
-    
+    "client-build": "npm run build --prefix client" 
   },
   "author": "Revati B",
   "license": "ISC",

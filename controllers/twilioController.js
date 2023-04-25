@@ -11,6 +11,7 @@ const client = twilio(accountSid, authToken);
 const sendVerificationCode = async (req, res) => {
   const { contactPhone } = req.body;
 
+
   try {
      // Generate a verification code and send it to the user's phone
 
@@ -23,7 +24,7 @@ const sendVerificationCode = async (req, res) => {
      });
  
 
-    return res.status(200).json({ status: 'success', verificationSid: verification.sid });
+    return res.status(200).json({ status: 'success', sid: verification.sid });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ status: 'error', message: 'Failed to send verification code.' });
@@ -32,6 +33,9 @@ const sendVerificationCode = async (req, res) => {
 
 const verifyCode = async (req, res) => {
   const { websiteUrl, contactPhone, code } = req.body;
+  console.log({websiteUrl: websiteUrl, contactPhone:contactPhone, code: code})
+  const sid = req.query.sid;
+  console.log(sid);
 
   try {
     // Prompt the user to enter the verification code
@@ -39,8 +43,10 @@ const verifyCode = async (req, res) => {
       .verificationChecks
       .create({
         to: contactPhone,
-        code: code
+        code: code,
+        verificationSid: sid
       });
+      
 
     if (verificationCheck.status === 'approved') {
 

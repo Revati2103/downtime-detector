@@ -2,38 +2,41 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useState } from 'react';
 
+
 const ContactForm = () => {
  
   const [showModal, setShowModal] = useState(false);
-  const [websiteUrl, setWebsiteUrl] = useState('');
+  const [verificationSid, setVerificationSid] = useState("");
+
+
 
   const initialValues = {
     websiteUrl: '',
     contactPhone: '',
-    verificationCode: ''
   };
   
   const validationSchema = Yup.object({
     websiteUrl: Yup.string().required('Required'),
     contactPhone: Yup.string().required('Required'),
-    verificationCode: Yup.string().required('Please enter the code you received via text')
   });
 
   const onSubmit = async (values, { resetForm }) => {
     try {
-      const apiUrl = process.env.API_URL || "http://localhost:5500/api/twilio/generate";
+      //const ApiUrlPrefix = process.env.API_URL_PREFIX || "http://localhost:5500";
+      console.log('inside onSubmit')
 
-      const response = await fetch(apiUrl, {
+      const response = await fetch('http://localhost:5500/api/twilio/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phone: values.contactPhone }),
+        body: JSON.stringify({ contactPhone: values.contactPhone }),
       });
       if (response.ok) {
-        setWebsiteUrl(values.websiteUrl); // Save website URL for verification
-        resetForm();
-        setShowModal(true);
+      const data = await response.json();
+      setVerificationSid(data.sid); // store the verification SID in state
+      resetForm();
+      setShowModal(true);
       }
     
     } catch (error) {
@@ -41,20 +44,21 @@ const ContactForm = () => {
     }
   };
   
+  
   const handleVerify = async (values , { resetForm }) => {
-    // handle verification code verification here
 
     try {
-      const apiUrl = process.env.API_URL || "http://localhost:5500/api/twilio/verify";
-      const response = await fetch(apiUrl, {
+      //const ApiUrlPrefix = process.env.API_URL_PREFIX || "http://localhost:5500";
+      const response = await fetch(`http://localhost:5500/api/twilio/verify?sid=${verificationSid}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          phone: values.contactPhone,
-          url: websiteUrl,
-          code: values.verificationCode
+          code: values.verificationCode,
+          websiteUrl: values.websiteUrl,
+          contactPhone: values.contactPhone,  
+          
         })
       });
   
@@ -62,7 +66,6 @@ const ContactForm = () => {
         alert('Your website has been added for monitoring. You will receive text alerts whenever your website is down.');
         // Reset form after successful verification
         resetForm();
-        setWebsiteUrl('');
         setShowModal(false);
       } else {
         alert('Verification failed. Please check the code and try again.');
@@ -78,10 +81,14 @@ const ContactForm = () => {
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
   {(formik) => (
     <div className="max-w-md mx-auto">
-      <form onSubmit={formik.handleSubmit}>
+      <Form>
         <div className="mb-4">
           <label htmlFor="websiteUrl" className="block text-gray-700 font-bold mb-2">Website URL</label>
-          <Field type="text" id="websiteUrl" name="websiteUrl" placeholder="https://example.com" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          <Field type="text" 
+          id="websiteUrl" 
+          name="websiteUrl" 
+          placeholder="https://example.com"
+           className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           <ErrorMessage name="websiteUrl" component="div" className="error-message text-red-500" />
         </div>
 
@@ -94,7 +101,7 @@ const ContactForm = () => {
         <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
           Submit
         </button>
-      </form>
+      </Form>
 
       {/* Add a modal to enter verification code */}
       {showModal && (
@@ -103,7 +110,7 @@ const ContactForm = () => {
             <h2 className="text-lg font-bold mb-4">Enter Verification Code</h2>
             <Formik initialValues={{ verificationCode: '' }} onSubmit={handleVerify}>
               {(formik) => (
-                <form onSubmit={formik.handleSubmit}>
+                <Form>
                   <div className="mb-4">
                     <label htmlFor="verificationCode" className="block text-gray-700 font-bold mb-2">Verification Code</label>
                     <Field type="text" id="verificationCode" name="verificationCode" placeholder="Enter verification code" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
@@ -112,7 +119,7 @@ const ContactForm = () => {
                   <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
                     Verify
                   </button>
-                </form>
+                </Form>
               )}
             </Formik>
           </div>
