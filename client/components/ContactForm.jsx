@@ -7,6 +7,8 @@ const ContactForm = () => {
  
   const [showModal, setShowModal] = useState(false);
   const [verificationSid, setVerificationSid] = useState("");
+  const [inputUrl, setInputUrl] = useState("");
+  const [phone, setPhone] = useState("");
 
 
 
@@ -35,6 +37,8 @@ const ContactForm = () => {
       if (response.ok) {
       const data = await response.json();
       setVerificationSid(data.sid); // store the verification SID in state
+      setInputUrl(values.websiteUrl);
+      setPhone(values.contactPhone);
       resetForm();
       setShowModal(true);
       }
@@ -56,8 +60,8 @@ const ContactForm = () => {
         },
         body: JSON.stringify({
           code: values.verificationCode,
-          websiteUrl: values.websiteUrl,
-          contactPhone: values.contactPhone,  
+          websiteUrl: inputUrl,
+          contactPhone: phone  
           
         })
       });
@@ -116,6 +120,7 @@ const ContactForm = () => {
                     <Field type="text" id="verificationCode" name="verificationCode" placeholder="Enter verification code" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                     <ErrorMessage name="verificationCode" component="div" className="error-message text-red-500" />
                   </div>
+                 
                   <button type="submit" disabled={!formik.isValid || formik.isSubmitting} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
                     Verify
                   </button>
