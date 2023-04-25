@@ -58,7 +58,7 @@ const verifyCode = async (req, res) => {
       });
       await website.save();
 
-      // Check if website is up and running
+      // Check if website is up and running currently
       const response = await fetch(websiteUrl);
       if (response.ok) {
         return res.status(200).json({ message: 'Website is up and running!' });
