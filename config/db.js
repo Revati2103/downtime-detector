@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose')
 
-//updated env var name for vercel
+//updated mongo env var name for vercel
 
 const connectDB = async () => {
   try {
