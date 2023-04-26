@@ -1,40 +1,5 @@
 import Link from 'next/link';
 
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: true
-  };
-}
-
-export async function getStaticProps({ params }) {
-  try {
-    const res = await fetch(`/api/snooze/${params.id}`);
-    if (res.status === 200) {
-      return {
-        props: {
-          success: true
-        }
-      };
-    } else {
-      return {
-        props: {
-          success: false,
-          message: "Unable to snooze alerts. Please try again later."
-        }
-      };
-    }
-  } catch (error) {
-    return {
-      props: {
-        success: false,
-        message: `Error: ${error.message}`
-      }
-    };
-  }
-}
-
-
 
 
 function SnoozeInfo({ success, message }) {
