@@ -37,10 +37,12 @@ app.put('/api/snooze/:id', snoozeUrl);
 
 // Import routes
 const twilioRoutes = require('./routes/twilioRoutes');
+const snoozeRoutes = require('./routes/snoozeRoutes')
 
 
 // Use routes
 app.use('/api/twilio', twilioRoutes);
+app.use('/api/snooze', snoozeRoutes);
 
 
 
