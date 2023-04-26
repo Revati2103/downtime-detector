@@ -13,7 +13,7 @@ const snoozeUrl = async (req, res) => {
       return res.status(404).json({ message: 'Website not found or already snoozed' });
     }
     // Redirect user to /app/snooze-info/:id
-    return res.redirect(`/snooze-info/${website._id}`);
+    return res.redirect(`${process.env.URL_PREFIX}/snooze-info/${website._id}`);
   } catch (error) {
     console.log(`Error snoozing website: ${error.message}`);
     return res.status(500).json({ message: 'Internal server error' });
