@@ -23,20 +23,21 @@ const snoozeUrl = async (req, res) => {
   }
 };
 
-const getSnoozeInfo = async (req, res) => {
-  try {
-    const website = await Website.findById(req.params.id);
-    if (!website) {
-      return res.status(404).json({ message: 'Website not found' });
-    }
-    return res.status(200).json({ website });
-  } catch (error) {
-    console.log(`Error getting website info: ${error.message}`);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-};
+// const getSnoozeInfo = async (req, res) => {
+//   try {
+//     const website = await Website.findById(req.params.id);
+//     if (!website) {
+//       return res.status(404).json({ message: 'Website not found' });
+//     }
+//     //return res.status(200).json({ website });
+//      // Redirect user to /app/snooze-info/:id
+//      return res.redirect(301, 'https://downtime-detector.vercel.app/snooze-info');
+//   } catch (error) {
+//     console.log(`Error getting website info: ${error.message}`);
+//     return res.status(500).json({ message: 'Internal server error' });
+//   }
+// };
 
 module.exports = {
   snoozeUrl,
-  getSnoozeInfo,
 };
