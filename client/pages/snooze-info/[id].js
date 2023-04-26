@@ -37,7 +37,7 @@ export async function getStaticProps({ params }) {
 
 
 
-ffunction SnoozeInfo({ success, message }) {
+function SnoozeInfo({ success, message }) {
   return (
     <div className="max-w-xl mx-auto px-4">
       {success ? (
