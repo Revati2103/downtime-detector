@@ -4,7 +4,6 @@ const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500;
 const { checkWebsites } = require('./jobs/websiteJob');
-const { redirectToSnoozeInfo } = require('./controllers/snoozeController')
 const dotenv = require('dotenv');
 require('dotenv').config();
 
@@ -44,7 +43,7 @@ const snoozeRoutes = require('./routes/snoozeRoutes')
 app.use('/api/twilio', twilioRoutes);
 app.use('/api/snooze', snoozeRoutes);
 
-app.get('/snooze-info', redirectToSnoozeInfo);
+
 
 
 
