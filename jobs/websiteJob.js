@@ -29,7 +29,7 @@ const checkWebsites = async () => {
         };
 
         const message = await client.messages.create({
-          body: `Your website ${website.url} is down. Click <a href="${snoozeUrl}">here</a> to snooze notifications.`,
+          body: `Your website ${website.url} is down. Click here to snooze notifications: ${snoozeUrl}`,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: website.phone,
         });
