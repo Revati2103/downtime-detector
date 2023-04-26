@@ -9,7 +9,6 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
 const checkWebsites = async () => {
-
   let websites = await Website.find();
   for (let website of websites) {
     try {
@@ -21,17 +20,24 @@ const checkWebsites = async () => {
       const response = await fetch(website.url);
       
       if (!response.ok && !website.snooze) {
+        const snoozeUrl = `/api/snooze/${website._id}`;
 
-        const urlPrefix = process.env.URL_PREFIX || 'http://localhost:5500'
-        const snoozeUrl = `${urlPrefix}/app/snooze-info/${website._id}`;
         console.log(snoozeUrl);
+
+        const requestOptions = {
+          method: 'PUT',
+        };
+
         const message = await client.messages.create({
-          body: `Your website ${website.url} is down. Click here to snooze notifications: <a href="${snoozeUrl}">Snooze</a>`,
+          body: `Your website ${website.url} is down. Click <a href="${snoozeUrl}">here</a> to snooze notifications.`,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: website.phone,
         });
-       
+
         console.log(message.sid);
+        
+        // Send a PUT request to the snooze endpoint
+        await fetch(snoozeUrl, requestOptions);
       }
       
       website.lastChecked = Date.now();
@@ -42,6 +48,7 @@ const checkWebsites = async () => {
     }
   }
 };
+
 
 
 
