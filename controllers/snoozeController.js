@@ -38,7 +38,7 @@ const getSnoozeInfo = async (req, res) => {
 
 const redirectToSnoozeInfo = async (req, res) => {
   try {
-    return res.redirect('https://downtime-detector-p1rjlkjlk-revati2103.vercel.app/snooze-info');
+    return res.redirect('https://downtime-detector.vercel.app/snooze-info');
   } catch (error) {
     console.log(`Error redirecting to snooze-info: ${error.message}`);
     return res.status(500).json({ message: 'Internal server error' });
