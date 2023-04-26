@@ -20,7 +20,7 @@ const checkWebsites = async () => {
       const response = await fetch(website.url);
       
       if (!response.ok && !website.snooze) {
-        const snoozeUrl = `/api/snooze/${website._id}`;
+        const snoozeUrl = `${process.env.URL_PREFIX}/api/snooze/${website._id}`;
 
         console.log(snoozeUrl);
 
