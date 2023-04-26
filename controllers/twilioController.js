@@ -33,10 +33,7 @@ const sendVerificationCode = async (req, res) => {
 
 const verifyCode = async (req, res) => {
   const { websiteUrl, contactPhone, code } = req.body;
-  console.log({websiteUrl: websiteUrl, contactPhone:contactPhone, code: code})
   const sid = req.query.sid;
-  console.log(sid);
-
   try {
     // Prompt the user to enter the verification code
     const verificationCheck = await client.verify.v2.services(process.env.TWILIO_VERIFY_SERVICE_SID)

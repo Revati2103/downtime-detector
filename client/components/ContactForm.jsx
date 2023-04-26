@@ -25,8 +25,6 @@ const ContactForm = () => {
   const onSubmit = async (values, { resetForm }) => {
     try {
     
-     //const ApiUrlPrefix = process.env.NEXT_PUBLIC_URL_PREFIX
-      console.log('inside onSubmit')
 
       const response = await fetch('/api/twilio/generate', {
         method: 'POST',
@@ -54,7 +52,7 @@ const ContactForm = () => {
 
     try {
 
-      //const ApiUrlPrefix = process.env.NEXT_PUBLIC_URL_PREFIX
+     
       const response = await fetch(`/api/twilio/verify?sid=${verificationSid}`, {
         method: 'POST',
         headers: {

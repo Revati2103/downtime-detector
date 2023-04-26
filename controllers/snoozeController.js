@@ -29,7 +29,7 @@ const getSnoozeInfo = async (req, res) => {
     if (!website) {
       return res.status(404).json({ message: 'Website not found' });
     }
-    //return res.status(200).json({ website });
+    
     return res.status(200).redirect('https://downtime-detector.vercel.app/snooze-info');
   } catch (error) {
     console.log(`Error getting website info: ${error.message}`);
