@@ -22,6 +22,8 @@ const checkWebsites = async () => {
       if (!response.ok && !website.snooze) {
         const snoozeUrl = `${process.env.URL_PREFIX}/api/snooze/${website._id}`;
 
+        console.log(snoozeUrl);
+
         const requestOptions = {
           method: 'PUT',
         };
@@ -32,6 +34,7 @@ const checkWebsites = async () => {
           to: website.phone,
         });
 
+        console.log(message.sid);
         
         // Send a PUT request to the snooze endpoint
         await fetch(snoozeUrl, requestOptions);
