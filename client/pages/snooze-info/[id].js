@@ -9,7 +9,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   try {
-    const res = await fetch(`${process.env.URL_PREFIX}/api/snooze/${params.id}`);
+    const res = await fetch(`/api/snooze/${params.id}`);
     if (res.status === 200) {
       return {
         props: {
