@@ -1,4 +1,6 @@
 const Website = require('../models/Website');
+const dotenv = require('dotenv');
+require('dotenv').config();
 
 const snoozeUrl = async (req, res) => {
   try {
@@ -14,7 +16,7 @@ const snoozeUrl = async (req, res) => {
     }
     //return res.status(200).json({ success: true });
     // Redirect user to /app/snooze-info/:id
-    return res.redirect(`/snooze-info`);
+    return res.redirect(`${process.env.URL_PREFIX}/snooze-info`);
   } catch (error) {
     console.log(`Error snoozing website: ${error.message}`);
     return res.status(500).json({success:false, message: 'Internal server error' });
