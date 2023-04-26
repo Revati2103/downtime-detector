@@ -12,9 +12,9 @@ const snoozeUrl = async (req, res) => {
     if (!website) {
       return res.status(404).json({ success: false, message: 'Website not found or already snoozed' });
     }
-    return res.status(200).json({ success: true });
+    //return res.status(200).json({ success: true });
     // Redirect user to /app/snooze-info/:id
-    // return res.redirect(`/snooze-info/${website._id}`);
+    return res.redirect(`/snooze-info`);
   } catch (error) {
     console.log(`Error snoozing website: ${error.message}`);
     return res.status(500).json({success:false, message: 'Internal server error' });
