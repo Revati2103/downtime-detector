@@ -2,19 +2,13 @@ const Website = require('../models/Website');
 
 const snoozeUrl = async (req, res) => {
   try {
-    const website = await Website.findOneAndUpdate(
-      {
-        _id: req.params.id,
-        snooze: false // Only update if not already snoozed
-      },
-      {
-        $set: {
-          snooze: true,
-          lastChecked: new Date(),
-        }
-      },
+
+    const website = await Website.findByIdAndUpdate(
+      req.params.id,
+      { snooze: true, lastChecked: new Date() },
       { new: true }
     );
+    
     if (!website) {
       return res.status(404).json({ message: 'Website not found or already snoozed' });
     }
