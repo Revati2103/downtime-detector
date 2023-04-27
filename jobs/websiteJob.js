@@ -21,6 +21,7 @@ const checkWebsites = async () => {
       
       if (!response.ok && !website.snooze) {
         const snoozeUrl = `${process.env.URL_PREFIX}/api/snooze/${website._id}`;
+        console.log(snoozeUrl);
 
         console.log(snoozeUrl);
 
