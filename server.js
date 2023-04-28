@@ -60,9 +60,6 @@ app.use((err, req, res, next) => {
 //   checkWebsites();
 // });
 
-// cron.schedule('*/2 * * * *', () => {
-//   checkWebsites();
-// });
 
 cron.schedule('* * * * *', () => {
   checkWebsites();
