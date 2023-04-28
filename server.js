@@ -61,9 +61,6 @@ app.use((err, req, res, next) => {
 //   checkWebsites();
 // });
 
-//New cron invocation:
-// Start the cron job
-cron.start();
 
 // cron.schedule('* * * * *', () => {
 //   checkWebsites();
