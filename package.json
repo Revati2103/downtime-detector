@@ -8,7 +8,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "next start --prefix client",
-    "client-build": "npm run build --prefix client" 
+    "client-build": "npm run build --prefix client"
   },
   "author": "Revati B",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "mongoose": "^7.0.4",
     "node-cron": "^3.0.2",
     "node-fetch": "^2.6.9",
+    "node-schedule": "^2.1.1",
     "nodemon": "^2.0.22",
     "twilio": "^4.10.0"
   }
