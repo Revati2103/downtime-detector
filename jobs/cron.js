@@ -1,8 +1,8 @@
 const cron = require('node-cron');
 const { checkWebsites } = require('./websiteJob');
 
-cron.schedule('* * * * *', () => {
+const job = cron.schedule('* * * * *', () => {
   checkWebsites();
 });
 
-module.exports = cron;
+module.exports = job;

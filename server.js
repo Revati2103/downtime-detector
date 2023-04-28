@@ -6,6 +6,7 @@ const port = process.env.PORT || 5500;
 //const { checkWebsites } = require('./jobs/websiteJob');
 const dotenv = require('dotenv');
 require('dotenv').config();
+const job = require('./jobs/cron');
 
 
 const connectDB = require('./config/db');
@@ -57,8 +58,7 @@ app.use((err, req, res, next) => {
 });
 
 
-// Require the cron job
-require('./jobs/cron');
+job.start();
 
 // Run cron job once everyday.
 // cron.schedule('0 0 * * *', () => {
