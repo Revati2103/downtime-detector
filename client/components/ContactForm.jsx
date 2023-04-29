@@ -98,7 +98,7 @@ const ContactForm = () => {
 
         <div className="mb-4">
           <label htmlFor="contactPhone" className="block text-gray-700 font-bold mb-2">Contact Phone</label>
-          <Field type="tel" id="contactPhone" name="contactPhone" placeholder="+1 123-456-7890" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          <Field type="tel" id="contactPhone" name="contactPhone" placeholder="+11234567890" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           <ErrorMessage name="contactPhone" component="div" className="error-message text-red-500" />
         </div>
 
