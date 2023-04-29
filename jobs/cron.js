@@ -7,7 +7,7 @@ const { checkWebsites } = require('./websiteJob');
 // });
 
 // Schedule the job to run at 9:30 am daily
-const job = schedule.scheduleJob('30 9 * * *', () => {
+const job = schedule.scheduleJob('* * * * *', () => {
     checkWebsites();
   });
   
