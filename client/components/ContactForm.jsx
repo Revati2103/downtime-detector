@@ -20,7 +20,7 @@ const ContactForm = () => {
   const validationSchema = Yup.object({
     websiteUrl: Yup.string().required('Required'),
     contactPhone: Yup.string()
-    .matches(/^\+1\d{10}$/, 'Invalid phone number format')
+    .matches(/^\+1\d{10}$/, 'Please enter the no as +1xxxxxxxxxx')
     .required('Required'),
   });
 
@@ -99,7 +99,7 @@ const ContactForm = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="contactPhone" className="block text-gray-700 font-bold mb-2">Contact Phone</label>
+          <label htmlFor="contactPhone" className="block text-gray-700 font-bold mb-2">Contact Phone(USA only)</label>
           <Field type="tel" id="contactPhone" name="contactPhone" placeholder="+11234567890" className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           <ErrorMessage name="contactPhone" component="div" className="error-message text-red-500" />
         </div>
