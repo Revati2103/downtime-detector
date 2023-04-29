@@ -26,8 +26,7 @@
   "crons": [
     {
       "path": "/api/cron",
-      "schedule": "30 7 * * *",
-      "tz": "America/Los_Angeles"
+      "schedule": "30 7 * * *"
     }
   ]
 }
