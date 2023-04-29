@@ -19,7 +19,9 @@ const ContactForm = () => {
   
   const validationSchema = Yup.object({
     websiteUrl: Yup.string().required('Required'),
-    contactPhone: Yup.string().required('Required'),
+    contactPhone: Yup.string()
+    .matches(/^\+1\d{10}$/, 'Invalid phone number format')
+    .required('Required'),
   });
 
   const onSubmit = async (values, { resetForm }) => {
