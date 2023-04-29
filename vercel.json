@@ -22,11 +22,5 @@
   ],
   "env": {
     "MONGO_URI": "${env.MONGO_URI}"
-  },
-  "crons": [
-    {
-      "path": "/api/cron",
-      "schedule": "30 14 * * *"
-    }
-  ]
+  }
 }
