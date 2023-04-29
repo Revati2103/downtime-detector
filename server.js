@@ -6,7 +6,7 @@ const port = process.env.PORT || 5500;
 //const { checkWebsites } = require('./jobs/websiteJob');
 const dotenv = require('dotenv');
 require('dotenv').config();
-const job = require('./jobs/cron');
+//const job = require('./jobs/cron');
 
 
 const connectDB = require('./config/db');

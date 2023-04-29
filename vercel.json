@@ -1,27 +1,33 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "server.js",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "client/next.config.js",
-        "use": "@vercel/next"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/.*",
-        "dest": "server.js"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/client/_next/$1"
-      }
-    ],
-    "env": {
-      "MONGO_URI": "${env.MONGO_URI}"
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "client/next.config.js",
+      "use": "@vercel/next"
     }
-  }
-  
+  ],
+  "routes": [
+    {
+      "src": "/api/.*",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/client/_next/$1"
+    }
+  ],
+  "env": {
+    "MONGO_URI": "${env.MONGO_URI}"
+  },
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "30 7 * * *",
+      "tz": "America/Los_Angeles"
+    }
+  ]
+}
