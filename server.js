@@ -3,10 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500;
-//const { checkWebsites } = require('./jobs/websiteJob');
+const { checkWebsites } = require('./jobs/websiteJob');
 const dotenv = require('dotenv');
 require('dotenv').config();
-const job = require('./jobs/cron');
+//const job = require('./jobs/cron');
+const CronJob = require('cron').CronJob;
 
 
 const connectDB = require('./config/db');
@@ -58,7 +59,10 @@ app.use((err, req, res, next) => {
 });
 
 
+const job = new CronJob('* * * * * *', checkWebsites, null, true, 'America/Los_Angeles');
 job.start();
+
+//job.start();
 
 // Run cron job once everyday.
 // cron.schedule('0 0 * * *', () => {
