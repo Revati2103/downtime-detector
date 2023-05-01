@@ -58,7 +58,6 @@ app.use((err, req, res, next) => {
 });
 
 
-job.start();
 
 // Run cron job once everyday.
 // cron.schedule('0 0 * * *', () => {
