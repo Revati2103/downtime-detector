@@ -1,5 +1,5 @@
 const express = require('express');
-const cron = require('node-cron');
+//const cron = require('node-cron');
 const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5500;
@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 require('dotenv').config();
 //const job = require('./jobs/cron');
 //const CronJob = require('cron').CronJob;
+const schedule = require('node-schedule');
 
 
 const connectDB = require('./config/db');
@@ -59,6 +60,11 @@ app.use((err, req, res, next) => {
 });
 
 
+const job = schedule.scheduleJob('* * * * *', () => {
+  console.log('Inside node-schedule...')
+  checkWebsites();
+});
+
 // const job = new CronJob('* * * * * *', checkWebsites, null, true, 'America/Los_Angeles');
 // job.start();
 
@@ -70,9 +76,9 @@ app.use((err, req, res, next) => {
 // });
 
 
-cron.schedule('* * * * *', () => {
-  checkWebsites();
-})
+// cron.schedule('* * * * *', () => {
+//   checkWebsites();
+// })
 
 app.get('/', (req,res) => {
     res.send('Hello from 5500!');

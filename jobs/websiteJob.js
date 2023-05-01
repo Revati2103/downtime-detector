@@ -16,6 +16,8 @@ const checkWebsites = async () => {
         console.log(`Error: Website object is not defined or missing properties`);
         continue;
       }
+
+      console.log('Inside checkWebsites');
       
       const response = await fetch(website.url);
       
@@ -23,11 +25,11 @@ const checkWebsites = async () => {
         const snoozeUrl = `${process.env.URL_PREFIX}/api/snooze/${website._id}`;
         console.log(snoozeUrl);
 
-        console.log(snoozeUrl);
-
         const requestOptions = {
           method: 'PUT',
         };
+
+        console.log('Composing twilio sms');
 
         const message = await client.messages.create({
           body: `Your website ${website.url} is down. Click here to snooze notifications: ${snoozeUrl}`,
@@ -36,6 +38,7 @@ const checkWebsites = async () => {
         });
 
         console.log(message.sid);
+        console.log('Twilio alert with snooze sent');
         
         // Send a PUT request to the snooze endpoint
         await fetch(snoozeUrl, requestOptions);
