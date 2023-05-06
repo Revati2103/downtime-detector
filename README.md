@@ -1,9 +1,8 @@
 
-A downtime detector with notification system for websites.
 
 # Downtime Detector
 
-Downtime detector is a web app that provides immediate text alerts to users via Twilio sms service when a monitored website goes down.
+
 
 ## Table of Contents
 
@@ -16,7 +15,7 @@ Downtime detector is a web app that provides immediate text alerts to users via 
 
 ## Overview
 
-Provide a brief overview of what the project is and what it does. Explain the main features and functionalities of the project, as well as any technologies or frameworks used.
+Downtime detector is a web app that provides immediate text alerts to users via Twilio sms service when a monitored website goes down.
 
 ## Demo
 
