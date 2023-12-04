@@ -50,7 +50,7 @@ Downtime Detector is a great tool for anyone who wants to ensure that their webs
 
 ## Screenshots
 
-![Alt text](./downDetectorImg.png "Downtime Detector")
+![Alt text](./bg.png "Downtime Detector")
 
 
 ## License
