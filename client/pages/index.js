@@ -17,7 +17,7 @@ const HomePage = () => {
         <div className="absolute inset-0 flex flex-col justify-center items-center max-w-xl mx-auto text-center backdrop-blur-sm w-100">
           <div className="space-y-8">
             <h1 className="font-primary font-extrabold text-white text-4xl sm:text-4xl md:text-5xl md:leading-tight">
-              Website Downtime Detector
+              Downtime Detector
             </h1>
             <section className="relative z-10 overflow-hidden">
               <div className="container">
